@@ -28,7 +28,7 @@ public class ClientController {
             @RequestParam(value = "page",         defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "3") Integer linesPerPage,
             @RequestParam(value = "direction",    defaultValue = "ASC") String direction,
-            @RequestParam(value = "orderBy",      defaultValue = "id") String orderBy
+            @RequestParam(value = "orderBy",      defaultValue = "name") String orderBy
     ){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         Page<ClientDTO> list=service.findAllPaged(pageRequest);
@@ -44,7 +44,7 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<ClientDTO> insert(@RequestBody ClientDTO dto){
-        
+
         dto=service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
